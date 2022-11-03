@@ -1,9 +1,12 @@
-import { api } from './base';
+import { api } from './axios';
+import SweetAlert from '../components/sweetAlert';
 
-export async function getAllProducts() {
-  const response = await api.get('/api/v1/imports')
+export async function getCategorizedProducts(offset = 0, limit = 2) {
+  const response = await api.get(`/api/v1/imports?offset=${offset}&limit=${limit}`)
     .then((res) => res.data )
-    .catch((err)=> console.log(err))
+    .catch((err)=> {
+      SweetAlert.error(err.response.data.error);
+    })
   
   return response;
 }
@@ -14,8 +17,23 @@ export async function importProducts(formData) {
         "Content-Type": "multipart/form-data",
       },
     })
+    .then((res) => {
+      SweetAlert.success(res.data.message);
+    })
+    .catch((err)=> {
+      SweetAlert.error(err.response.data.error);
+    })
+
+  return response;
+}
+
+export async function getMoreProducts(categoryId, offset, limit = 5) {
+  const response = await api.get(`/api/v1/imports/${categoryId}?offset=${offset}&limit=${limit}`)
     .then((res) => res.data )
-    .catch((err)=> console.log(err))
+    .catch((err)=> {
+      SweetAlert.error(err.response.data.error);
+    })
   
   return response;
 }
+

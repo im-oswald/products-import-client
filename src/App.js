@@ -8,6 +8,7 @@ function App() {
   return (
     <Fragment>
       <BrowserRouter>
+        <div >
           <Navbar />
           <Routes >
             <Route exact path="/" element={<Products />} />
@@ -15,6 +16,7 @@ function App() {
             <Route path='/imports' element={<ImportProducts />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
+        </div>
       </BrowserRouter>
     </Fragment>
   );
